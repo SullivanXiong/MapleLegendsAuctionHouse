@@ -1,3 +1,6 @@
+path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "../.env") });
+
 const isDev = process.env.ENV === "DEV";
 const PORT = process.env.ELECTRON_PORT ? parseInt(process.env.ELECTRON_PORT) : 7002;
 const REACT_PORT = process.env.REACT_PORT ? parseInt(process.env.REACT_PORT) : 7003;

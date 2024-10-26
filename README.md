@@ -18,6 +18,10 @@ MLp2pRTfmA (MapleLegends Peer-to-Peer Real Time Free Market Aggregator), a p2p a
 - PostGreSQL
 - WebRTC
 
+### Image Recognition
+
+- node-tesseract-ocr (https://github.com/UB-Mannheim/tesseract/wiki)
+
 ## FAQ
 
 Q: How will we capture market data? </br>

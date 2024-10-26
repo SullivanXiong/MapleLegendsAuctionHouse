@@ -43,3 +43,6 @@ next-env.d.ts
 electron-src/*.jpg
 electron-src/*.jpeg
 electron-src/*.png
+*.jpg
+*.jpeg
+*.png

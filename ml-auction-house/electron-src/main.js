@@ -12,6 +12,8 @@ serverApp.listen(PORT, () => {
   console.log(`Electron Server running on ${LOCALHOST_URL}`);
 });
 
+console.log(isDev);
+
 function createWindow() {
   let win = new BrowserWindow({
     width: isDev ? 1920 : 1366,
