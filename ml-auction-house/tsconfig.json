@@ -22,6 +22,15 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "electron-src/util/const.js",
+    "electron-src/renderer.js",
+    "electron-src/preload.js",
+    "electron-src/main.js"
+  ],
   "exclude": ["node_modules"]
 }
