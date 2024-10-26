@@ -5,6 +5,7 @@ MLp2pRTfmA (MapleLegends Peer-to-Peer Real Time Free Market Aggregator), a p2p a
 
 ## Tech Stack
 ### Front-end
+- Next.js (React.js)
 - Electron (JavaScript)
 - HTML+CSS
 
