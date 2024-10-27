@@ -1,4 +1,4 @@
-path = require("path");
+const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 const tesseract = require("node-tesseract-ocr");
 const { captureScreenStream } = require("./image-stream");
@@ -8,29 +8,38 @@ const MILLISECONDS_PER_SECOND = 1000;
 const RATE_IN_MILLI = MILLISECONDS_PER_SECOND / FPS;
 let DPI = 40;
 
-setInterval(() => {
-  // Capture screen stream and run OCR
-  captureScreenStream()
-    .then(async (image) => {
-      const config = {
-        lang: "eng",
-        oem: 1,
-        psm: 3,
-        dpi: DPI,
-      };
-      //   console.log("Running OCR on DPI: ", DPI);
-      DPI += 1;
+// setInterval(() => {
+//   // Capture screen stream and run OCR
+//   captureScreenStream()
+//     .then(async (image) => {
+//       const config = {
+//         lang: "eng",
+//         oem: 1,
+//         psm: 3,
+//         dpi: DPI,
+//       };
+//         console.log("Running OCR on DPI: ", DPI);
+//       DPI += 1;
+//       tesseract
+//         .recognize(image, config)
+//         .then((text) => {
+//           console.log("Recognized text:", text);
+//         })
+//         .catch((error) => {
+//           console.error(error.message);
+//         });
+//     })
+//     .catch((error) => {
+//       console.error(error.message);
+//     });
+// }, RATE_IN_MILLI);
 
-      tesseract
-        .recognize(image, config)
-        .then((text) => {
-          console.log("Recognized text:", text);
-        })
-        .catch((error) => {
-          console.error(error.message);
-        });
-    })
-    .catch((error) => {
-      console.error(error.message);
-    });
-}, RATE_IN_MILLI);
+const fs = require("fs");
+
+const Tesseract = require("tesseract.js");
+
+Tesseract.recognize(path.resolve(__dirname, "../../maplelegends_item_sold.jpeg"), "eng", {}).then(
+  ({ data: { text } }) => {
+    console.log(text);
+  }
+);
