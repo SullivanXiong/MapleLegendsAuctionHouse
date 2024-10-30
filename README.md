@@ -9,12 +9,12 @@ MLp2pRTfmA (MapleLegends Peer-to-Peer Real Time Free Market Aggregator), a p2p a
 ### Front-end
 
 - Next.js (React.js)
-- Electron (JavaScript)
 - HTML+CSS
 
 ### Back-end
 
-- node.js
+- Flask (Python)
+- OpenCV
 - PostGreSQL
 - WebRTC
 
@@ -33,12 +33,6 @@ A: Because I needed an excuse to work on my first p2p project, and I didn't want
 Q: Is p2p a viable option? </br>
 A: p2p is viable. We can standardize protocols and implement into the application safety by design with blacklists, reliability trust scores, and a contact list of trusted users to also verify real data.
 
-## Setup
+## Executable via pyinstaller
 
-/electron-src/.env
-
-### Env
-
-ENV="DEV"
-ELECTRON_PORT=
-REACT_PORT=
+`pyinstaller --onefile --windowed ./ml-auction-house/app.py`
