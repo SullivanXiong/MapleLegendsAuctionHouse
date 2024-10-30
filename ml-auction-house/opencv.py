@@ -1,14 +1,15 @@
 import cv2
-import os
 import numpy as np
+import os
 import pygetwindow as gw
+import pytesseract
 import time
 from PIL import ImageGrab
 from opencv_utils.fm import get_fm_from_template_name
 
 FPS = 10
 MAPLELEGENDS_WINDOW_NAME = 'MapleLegends'
-THRESHOLD = 0.95
+THRESHOLD = 0.96
 
 BLUE_BGR = (255, 0, 0)
 GREEN_BGR = (0, 255, 0)
@@ -66,6 +67,29 @@ def screenshot_window(window_name=''):
     
     return cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
 
+def preprocess_for_ocr(region):
+    """ Preprocess image to enhance OCR accuracy. """
+    # Resize for better OCR accuracy
+    region = cv2.resize(region, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+
+    # Convert to grayscale
+    gray_region = cv2.cvtColor(region, cv2.COLOR_BGR2GRAY)
+    
+    # Apply Gaussian blur to reduce noise
+    blurred = cv2.GaussianBlur(gray_region, (3, 3), 0)
+    
+    # Apply binary thresholding for better contrast
+    _, binary = cv2.threshold(blurred, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    
+    return binary
+
+def extract_text_from_region(region):
+    """ Extract text from the given region using Tesseract OCR. """
+    # Convert to grayscale if not already in grayscale
+    processed_binary = preprocess_for_ocr(region)
+    text = pytesseract.image_to_string(processed_binary, config='--psm 6')  # PSM 6 assumes a uniform block of text
+    return text.strip()
+
 if __name__ == '__main__':
     templates, shop_templates = load_all_opencv_templates()
     print(f'Loaded {len(templates)} templates and {len(shop_templates)} shop templates.')
@@ -102,16 +126,18 @@ if __name__ == '__main__':
                             loc_y, loc_x = np.where(shop_res >= STORE_THRESHOLD)
                             shop_res = shop_res[shop_res >= STORE_THRESHOLD]
                             
-                            left_diff = -30
+                            left_diff = 10
                             top_diff = -20
-                            right_diff = 200
+                            right_diff = 160
                             bottom_diff = 40
                             for (x, y) in zip(loc_x, loc_y):
                                 top_left = (x + left_diff, y + top_diff)
                                 bottom_right = (top_left[0] + right_diff, top_left[1] + bottom_diff)
                                 
-                                
-                                item_is_sold = is_sold(ss[top_left[1]:bottom_right[1], top_left[0]:bottom_right[0]])
+                                item_region = ss[top_left[1]:bottom_right[1], top_left[0]:bottom_right[0]]
+                                item_is_sold = is_sold(item_region)
+                                item_text = extract_text_from_region(item_region)
+                                print(f'{item_text} {"(Sold)" if item_is_sold else ""}')
                                 if item_is_sold:
                                     pass
                                     cv2.rectangle(ss, top_left, bottom_right, RED_BGR, 2)
