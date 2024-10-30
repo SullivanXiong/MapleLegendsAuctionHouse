@@ -9,13 +9,17 @@
     "start": "next start --port 7003",
     "lint": "next lint",
     "electron": "electron .",
-    "ocr": "node --no-deprecation ./electron-src/ocr/ocr.js"
+    "ocr": "node --no-deprecation --trace-uncaught ./electron-src/ocr/ocr.js"
   },
   "dependencies": {
+    "@techstark/opencv-js": "^4.10.0-release.1",
     "active-win": "^8.2.1",
+    "canvas": "^2.11.2",
+    "install": "^0.13.0",
     "jimp": "^1.6.0",
     "next": "15.0.1",
-    "node-tesseract-ocr": "^2.2.1",
+    "npm": "^10.9.0",
+    "opencv4nodejs": "^5.6.0",
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
     "screenshot-desktop": "^1.15.0",

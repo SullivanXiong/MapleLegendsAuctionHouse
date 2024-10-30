@@ -40,7 +40,7 @@ yarn-error.log*
 next-env.d.ts
 
 # test images
-*.jpg
-*.jpeg
-*.png
+./electron-src/*.jpg
+./electron-src/*.jpeg
+./electron-src/*.png
 *.traineddata
