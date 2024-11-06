@@ -9,6 +9,8 @@ if __name__ == '__main__':
     templates, shop_templates = load_all_opencv_templates()
     
     while True:
+        start_time = time.time()
+        
         if cv2.waitKey(1) & 0xFF == ord('q'):
             cv2.destroyAllWindows()
             break
@@ -25,5 +27,7 @@ if __name__ == '__main__':
                     
             cv2.imshow('MapleLegends OpenCV', ss)
         
+        # Cap the frame rate to the specified FPS
+        elapsed_time = time.time() - start_time
         # Control FPS
-        time.sleep(1 / const.FPS)
+        time.sleep(max(1 / const.FPS - elapsed_time, 0))

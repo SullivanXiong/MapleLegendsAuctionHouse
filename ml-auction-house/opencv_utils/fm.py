@@ -39,6 +39,23 @@ def shop_template_matcher(ss, ss_edges, shop_templates):
         # TODO: Separate the regions for the item, name, and price
         # TODO: Figure out if it's a scroll. If it is, extract the full scroll name when hovered.
         # TODO: drop duplicate overlapping regions
+        # TODO: Limit template region matching after I find the shop match.
+        #       I should be able to reasonably figure out where the shop is
+        #       relative to the shop text match.
+        # TODO: concurrency for the template matching
+        # TODO: Memoize the template matching results to reduce OCR and OpenCV.
+        #       This calls for complexity in the data structure to store the
+        #       in a sqlite instance, as well as cleaning up the data in the
+        #       cases where
+        #       1. The shop is reopened
+        #       2. The shop has been tidied up
+        #       3. Items have been sold
+        #       We will also need to compress the data to reduce the size of
+        #       the database.
+        #       When not processing Shop data (i.e. in the FM), we should do
+        #       other work in parallel such as saving the data to the database,
+        #       or updating the database with new data from other users of the
+        #       mesh network.
         
         left_diff = 10
         top_diff = -20
